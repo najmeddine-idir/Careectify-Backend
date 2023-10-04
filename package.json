@@ -1,0 +1,37 @@
+{
+  "name": "careectify-backend",
+  "version": "1.0.0",
+  "description": "The backend of the app Careectify",
+  "main": "bootstrap.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc",
+    "start": "NODE_ENV=production node ./dist/bootstrap.js",
+    "dev": "env-cmd -f ./local.env ts-node-dev --respawn --transpile-only ./bootstrap.ts"
+  },
+  "author": "Najmeddine Idir",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.3.1",
+    "env-cmd": "^10.1.0",
+    "express": "^4.18.2",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.0",
+    "tsoa": "^5.1.1"
+  },
+  "devDependencies": {
+    "@types/connect-livereload": "^0.6.1",
+    "@types/express": "^4.17.18",
+    "@types/livereload": "^0.9.3",
+    "@types/node": "^20.8.2",
+    "@types/swagger-ui-express": "^4.1.4",
+    "@typescript-eslint/eslint-plugin": "^6.7.4",
+    "@typescript-eslint/parser": "^6.7.4",
+    "concurrently": "^8.2.1",
+    "connect-livereload": "^0.6.1",
+    "eslint": "^8.50.0",
+    "livereload": "^0.9.3",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.2.2"
+  }
+}
