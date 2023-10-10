@@ -7,17 +7,24 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc",
     "start": "NODE_ENV=production node ./dist/bootstrap.js",
-    "dev": "env-cmd -f ./local.env ts-node-dev --respawn --transpile-only ./bootstrap.ts"
+    "dev": "SET NODE_ENV=dev&& concurrently \"env-cmd -f ./.env ts-node-dev --respawn --transpile-only ./bootstrap.ts\"",
+    "swagger": "tsoa spec"
   },
   "author": "Najmeddine Idir",
   "license": "ISC",
   "dependencies": {
+    "@types/inversify": "^2.0.33",
+    "aws-sdk": "^2.1471.0",
     "dotenv": "^16.3.1",
     "env-cmd": "^10.1.0",
     "express": "^4.18.2",
+    "inversify": "^6.0.1",
+    "inversify-express-utils": "^6.4.3",
+    "reflect-metadata": "^0.1.13",
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^5.0.0",
-    "tsoa": "^5.1.1"
+    "tsoa": "^5.1.1",
+    "winston-cloudwatch": "^6.2.0"
   },
   "devDependencies": {
     "@types/connect-livereload": "^0.6.1",
@@ -33,5 +40,9 @@
     "livereload": "^0.9.3",
     "ts-node-dev": "^2.0.0",
     "typescript": "^5.2.2"
+  },
+  "peerDependencies": {
+    "@aws-sdk/client-cloudwatch-logs": "^3.425.0",
+    "winston": "^3.10.0"
   }
 }
