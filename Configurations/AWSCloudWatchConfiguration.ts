@@ -1,7 +1,6 @@
 import { injectable } from "inversify";
-import "reflect-metadata";
 import AWSConfiguration from "./Abstractions/AWSConfiguration";
-import { getAWSParameterName } from "../Utilities/helpers";
+import { getAWSParameterName } from "../src/Common/Utilities/helpers";
 
 @injectable()
 class AWSCloudWatchConfiguration {

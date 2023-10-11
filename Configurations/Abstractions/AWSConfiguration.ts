@@ -1,5 +1,4 @@
 import { inject, injectable } from "inversify";
-import "reflect-metadata";
 import { SSM } from "aws-sdk";
 
 @injectable()

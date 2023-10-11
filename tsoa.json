@@ -1,8 +1,9 @@
 {
-  "entryFile": "bootstrap.ts",
+  "entryFile": "./src/bootstrap.ts",
   "noImplicitAdditionalProperties": "throw-on-extras",
   "spec": {
     "outputDirectory": "dist",
     "specVersion": 3
-  }
+  },
+  "controllerPathGlobs": ["src/Api/Controllers/*.ts"]
 }
