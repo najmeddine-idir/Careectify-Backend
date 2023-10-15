@@ -1,6 +1,7 @@
 import { injectable } from "inversify";
-import AWSConfiguration from "./Abstractions/AWSConfiguration";
-import { getAWSParameterName } from "../src/Common/Utilities/helpers";
+import AWSConfiguration from "./Abstractions/AWSConfiguration.js";
+import { getAWSParameterName } from "../src/Common/Utilities/helpers.js";
+import { SSM } from "aws-sdk";
 
 @injectable()
 class AWSCloudWatchConfiguration {
@@ -9,7 +10,9 @@ class AWSCloudWatchConfiguration {
   constructor(awsConfiguration: AWSConfiguration) {
     const awsCloudWatchConfiguration: AWSCloudWatchConfiguration = JSON.parse(
       awsConfiguration.awsConfigurationParameters
-        .filter((x) => x.Name === getAWSParameterName("cloudWatch"))
+        .filter(
+          (x: SSM.Parameter) => x.Name === getAWSParameterName("cloudWatch")
+        )
         .pop()?.Value ?? ""
     ) as AWSCloudWatchConfiguration;
 

@@ -2,14 +2,16 @@
   "name": "careectify-backend",
   "version": "1.0.0",
   "description": "The backend of the app Careectify",
-  "main": "./src/bootstrap.ts",
+  "exports": "./src/bootstrap.ts",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "predev": "npm run swagger",
     "prebuild": "npm run swagger",
     "build": "tsc",
     "start": "NODE_ENV=production node ./dist/bootstrap.js",
-    "dev": "SET NODE_ENV=dev&& concurrently \"env-cmd -f ./Configurations/.env ts-node-dev --respawn --transpile-only ./src/bootstrap.ts\"",
+    "dev": "SET NODE_ENV=dev&& env-cmd -f ./Configurations/.env nodemon --exec node --loader ts-node/esm ./src/bootstrap.ts",
+    "local": "SET NODE_ENV=local&& env-cmd -f ./Configurations/.env nodemon --exec node --loader ts-node/esm ./src/bootstrap.ts",
     "swagger": "tsoa spec"
   },
   "author": "Najmeddine Idir",
@@ -26,17 +28,13 @@
     "winston-cloudwatch": "^6.2.0"
   },
   "devDependencies": {
-    "@types/connect-livereload": "^0.6.1",
-    "@types/livereload": "^0.9.3",
     "@types/node": "^20.8.2",
     "@types/swagger-ui-express": "^4.1.4",
     "@typescript-eslint/eslint-plugin": "^6.7.4",
     "@typescript-eslint/parser": "^6.7.4",
-    "concurrently": "^8.2.1",
-    "connect-livereload": "^0.6.1",
     "eslint": "^8.50.0",
-    "livereload": "^0.9.3",
-    "ts-node-dev": "^2.0.0",
+    "nodemon": "^3.0.1",
+    "ts-node": "^10.9.1",
     "typescript": "^5.2.2"
   },
   "peerDependencies": {
