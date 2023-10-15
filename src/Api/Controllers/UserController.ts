@@ -1,6 +1,6 @@
-import ILogger from "../../Common/Utilities/Logger/Abstractions/ILogger";
+import ILogger from "../../Common/Utilities/Logger/Abstractions/ILogger.js";
 import { inject } from "inversify";
-import { Route, Response, BaseHttpController, Get, fromRoute } from "../Utilities/webApi";
+import { Route, Response, BaseHttpController, Get, fromRoute } from "../Utilities/webApi.js";
 
 // @Tags("User")
 @Route("/users")

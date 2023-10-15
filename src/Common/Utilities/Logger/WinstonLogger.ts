@@ -1,7 +1,7 @@
-import ILogger from "./Abstractions/ILogger";
+import ILogger from "./Abstractions/ILogger.js";
 import { createLogger, format, transports, Logger } from "winston";
 import WinstonCloudWatch from "winston-cloudwatch";
-import AWSCloudWatchConfiguration from "../../../../Configurations/AWSCloudWatchConfiguration";
+import AWSCloudWatchConfiguration from "../../../../Configurations/AWSCloudWatchConfiguration.js";
 import { injectable } from "inversify";
 
 const { combine, timestamp, prettyPrint, errors } = format;

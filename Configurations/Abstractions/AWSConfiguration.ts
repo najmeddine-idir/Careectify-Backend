@@ -1,12 +1,13 @@
 import { inject, injectable } from "inversify";
-import { SSM } from "aws-sdk";
+import aws from "aws-sdk";
 
 @injectable()
 abstract class AWSConfiguration {
-  public readonly awsConfigurationParameters: SSM.ParameterList;
+  public readonly awsConfigurationParameters: aws.SSM.ParameterList;
 
   constructor(
-    @inject("SSM.ParameterList") awsConfigurationParameters: SSM.ParameterList
+    @inject("SSM.ParameterList")
+    awsConfigurationParameters: aws.SSM.ParameterList
   ) {
     this.awsConfigurationParameters = awsConfigurationParameters;
   }
