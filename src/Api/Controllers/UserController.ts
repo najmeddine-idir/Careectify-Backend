@@ -1,43 +1,53 @@
-import ILogger from "../../Common/Utilities/Logger/Abstractions/ILogger.js";
 import { inject } from "inversify";
-import { Route, Response, BaseHttpController, Get, fromRoute } from "../Utilities/webApi.js";
+import {
+  Route,
+  BaseHttpController,
+  Get,
+  FromRoute,
+  Request,
+  Tags,
+  Response,
+} from "../Utilities/webApi.js";
+import express from "express";
+import IUserService from "../../Domain/Services/Abstractions/IUserService.js";
+import UserConverter from "../Converters/UserConverter.js";
+import UserResponse from "../Dtos/Responses/UserResponse.js";
+import {
+  ErrorNotFoundResponse,
+  ErrorUnexpectedErrorResponse,
+} from "../Dtos/Responses/ErrorResponse.js";
 
-// @Tags("User")
+@Tags("User")
 @Route("/users")
 export class UserController extends BaseHttpController {
-  private readonly _logger: ILogger;
+  private readonly _userService: IUserService;
 
-  constructor(@inject("ILogger") logger: ILogger) {
+  constructor(@inject("IUserService") userService: IUserService) {
     super();
-    this._logger = logger;
+
+    this._userService = userService;
   }
 
   /**
    * Gets user by id.
    * @param id User id
-   * @returns User
+   * @returns UserResponse
    */
-  @Response<User>(200)
-  @Response<Error>(500)
+  @Response<UserResponse>(200)
+  @Response<ErrorNotFoundResponse>(404)
+  @Response<ErrorUnexpectedErrorResponse>(500)
   @Get("/:id")
-  public async GetUser(@fromRoute("id") id: string): Promise<User | unknown> {
-    try {
-      return this.json(new User(id, "Najmeddine"), 200);
-    } 
-    catch (error: unknown) {
-      this._logger.Error(error);
+  public async GetUser(
+    @FromRoute("id") id: string,
+    @Request() { abortController }: express.Request
+  ): Promise<UserResponse> {
+    const user = await this._userService.getUserByIdAsync(
+      id,
+      abortController.signal
+    );
 
-      return this.json({message: (error as Error).message}, 500);
-    }
-  }
-}
+    const userResponse = UserConverter.toUserResponse(user);
 
-class User {
-  public id: string;
-  public name: string;
-
-  constructor(id: string, name: string) {
-    this.id = id;
-    this.name = name;
+    return this.ok(userResponse) as UserResponse;
   }
 }

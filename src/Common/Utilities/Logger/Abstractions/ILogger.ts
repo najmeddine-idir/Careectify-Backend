@@ -1,11 +1,11 @@
 interface ILogger {
-  Debug(message: unknown): void;
+  debug(message: object | string | number): void;
 
-  Error(message: unknown): void;
+  error(message: object | string | number): void;
 
-  Information(message: unknown): void;
+  information(message: object | string | number): void;
 
-  Warning(message: unknown): void;
+  warning(message: object | string | number): void;
 }
 
 export default ILogger;
