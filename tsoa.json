@@ -1,5 +1,5 @@
 {
-  "entryFile": "./src/bootstrap.ts",
+  "entryFile": "./src/Api/bootstrap.ts",
   "noImplicitAdditionalProperties": "throw-on-extras",
   "spec": {
     "outputDirectory": "dist",

@@ -1,5 +1,5 @@
-import * as inversifyExpressUtils from "inversify-express-utils";
-import * as tsoa from "tsoa";
+import inversifyExpressUtils from "inversify-express-utils";
+import tsoa from "tsoa";
 
 export function Route(path: string): (target: unknown) => void {
   const controllerFuntion = inversifyExpressUtils.controller(path);
@@ -25,4 +25,6 @@ export function Get(
 
 export const Response = tsoa.Response;
 export const BaseHttpController = inversifyExpressUtils.BaseHttpController;
-export const fromRoute = inversifyExpressUtils.requestParam;
+export const FromRoute = inversifyExpressUtils.requestParam;
+export const Request = tsoa.Request;
+export const Tags = tsoa.Tags;

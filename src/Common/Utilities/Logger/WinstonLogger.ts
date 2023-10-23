@@ -35,19 +35,35 @@ class WinstonLogger implements ILogger {
     }
   }
 
-  Debug(message: unknown): void {
+  debug(message: object | string | number): void {
+    if (message instanceof Object) {
+      message = { ...message };
+    }
+
     this._logger.debug(message);
   }
 
-  Error(message: unknown): void {
+  error(message: object | string | number): void {
+    if (message instanceof Object) {
+      message = { ...message };
+    }
+
     this._logger.error(message);
   }
 
-  Information(message: unknown): void {
+  information(message: object | string | number): void {
+    if (message instanceof Object) {
+      message = { ...message };
+    }
+
     this._logger.info(message);
   }
 
-  Warning(message: unknown): void {
+  warning(message: object | string | number): void {
+    if (message instanceof Object) {
+      message = { ...message };
+    }
+
     this._logger.debug(message);
   }
 }

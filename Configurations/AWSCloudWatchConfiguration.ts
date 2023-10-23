@@ -1,19 +1,19 @@
 import { injectable } from "inversify";
 import AWSConfiguration from "./Abstractions/AWSConfiguration.js";
-import { getAWSParameterName } from "../src/Common/Utilities/helpers.js";
-import { SSM } from "aws-sdk";
+import { GetParameter } from "../src/Common/Utilities/helpers.js";
+import Constants from "../src/Common/Constants.js";
 
 @injectable()
 class AWSCloudWatchConfiguration {
   public groupName: string;
 
   constructor(awsConfiguration: AWSConfiguration) {
+    const cloudWatchParameter = GetParameter(
+      awsConfiguration.awsConfigurationParameters,
+      Constants.CLOUD_WATCH_PARAMETER_NAME
+    );
     const awsCloudWatchConfiguration: AWSCloudWatchConfiguration = JSON.parse(
-      awsConfiguration.awsConfigurationParameters
-        .filter(
-          (x: SSM.Parameter) => x.Name === getAWSParameterName("cloudWatch")
-        )
-        .pop()?.Value ?? ""
+      cloudWatchParameter
     ) as AWSCloudWatchConfiguration;
 
     this.groupName = awsCloudWatchConfiguration.groupName;
