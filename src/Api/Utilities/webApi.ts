@@ -28,3 +28,4 @@ export const BaseHttpController = inversifyExpressUtils.BaseHttpController;
 export const FromRoute = inversifyExpressUtils.requestParam;
 export const Request = tsoa.Request;
 export const Tags = tsoa.Tags;
+export const Security = tsoa.Security;
