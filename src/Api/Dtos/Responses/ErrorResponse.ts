@@ -17,4 +17,6 @@ export class ErrorResponse<T extends ErrorCode> extends BaseResponse {
 
 export class ErrorNotFoundResponse extends ErrorResponse<ErrorCode.NotFound> {}
 
+export class ErrorNotAuthorizedResponse extends ErrorResponse<ErrorCode.NotAuthorized> {}
+
 export class ErrorUnexpectedErrorResponse extends ErrorResponse<ErrorCode.UnexpectedError> {}

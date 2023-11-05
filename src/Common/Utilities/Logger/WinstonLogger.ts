@@ -22,8 +22,10 @@ class WinstonLogger implements ILogger {
 
     if (process.env.NODE_ENV !== "dev") {
       const cloudwatchConfig: WinstonCloudWatch.CloudwatchTransportOptions = {
-        logGroupName: awsCloudWatchConfiguration.groupName,
-        logStreamName: `${awsCloudWatchConfiguration.groupName}-${process.env.NODE_ENV}`,
+        logGroupName: awsCloudWatchConfiguration.getGroupName(),
+        logStreamName: `${awsCloudWatchConfiguration.getGroupName()}-${
+          process.env.NODE_ENV
+        }`,
         messageFormatter: (data) => {
           const { level, message, timestamp, ...meta } = data;
           const metatdata = `:\n${JSON.stringify(meta, null, 2)}`;

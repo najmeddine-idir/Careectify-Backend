@@ -9,9 +9,19 @@ abstract class DatabaseConfiguration {
     this._awsConfigurationParameters = awsConfigurationParameters;
   }
 
-  abstract getConnectionString(): string;
+  getConnectionString(): string {
+    if (!this._connectionString)
+      throw new Error("Unable to retrieve database connection string.");
 
-  abstract getDatabaseName(): string;
+    return this._connectionString;
+  }
+
+  getDatabaseName(): string {
+    if (!this._databaseName)
+      throw new Error("Unable to retrieve database name.");
+
+    return this._databaseName;
+  }
 }
 
 export default DatabaseConfiguration;

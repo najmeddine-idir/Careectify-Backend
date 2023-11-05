@@ -4,16 +4,15 @@ import { InversifyExpressServer } from "inversify-express-utils";
 import swaggerDocument from "../../dist/swagger.json" assert { type: "json" };
 import { serve, setup } from "swagger-ui-express";
 import "../Common/Extensions/RequestExtensions.js";
-
-/****************** Controllers *********************/
 import "./Controllers/UserController.js";
 import ErrorHandlerMiddleware from "./Middlewares/ErrorHandlerMiddleware.js";
+import AuthorizationMiddleware from "./Middlewares/AuthorizationMiddleware.js";
 
 const port = process.env.PORT;
 
 dotenv.config();
 
-useDependencyInjenction().then((container) => {
+useDependencyInjenction().then(async (container) => {
   const server = new InversifyExpressServer(container);
 
   server
@@ -26,7 +25,14 @@ useDependencyInjenction().then((container) => {
             req.abortController.abort();
           });
           next();
-        });
+        })
+        .use(
+          container
+            .get<AuthorizationMiddleware>("AuthorizationMiddleware")
+            .handle.bind(
+              container.get<AuthorizationMiddleware>("AuthorizationMiddleware")
+            )
+        );
     })
     .setErrorConfig((app) => {
       app.use(

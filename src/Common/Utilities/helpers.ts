@@ -16,5 +16,6 @@ export function GetParameter(
   if (!parameter) {
     throw new Error(`No parameter with name "${awsParameterPath}" was found!`);
   }
+
   return parameter;
 }
