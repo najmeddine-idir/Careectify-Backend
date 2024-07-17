@@ -25,14 +25,17 @@
     "inversify": "^6.0.1",
     "inversify-express-utils": "^6.4.3",
     "jsonwebtoken": "^9.0.2",
+    "luxon": "^3.4.3",
     "mongoose": "^7.6.2",
     "reflect-metadata": "^0.1.13",
     "swagger-ui-express": "^5.0.0",
+    "ts-pattern": "^5.0.5",
     "tsoa": "^5.1.1",
     "winston-cloudwatch": "^6.2.0"
   },
   "devDependencies": {
     "@types/jsonwebtoken": "^9.0.4",
+    "@types/luxon": "^3.3.4",
     "@types/node": "^20.8.2",
     "@types/swagger-ui-express": "^4.1.4",
     "@typescript-eslint/eslint-plugin": "^6.7.4",

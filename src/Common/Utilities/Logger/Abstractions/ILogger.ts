@@ -1,11 +1,12 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 interface ILogger {
-  debug(message: object | string | number): void;
+  debug(message: any): void;
 
-  error(message: object | string | number): void;
+  error(message: any): void;
 
-  information(message: object | string | number): void;
+  information(message: any): void;
 
-  warning(message: object | string | number): void;
+  warning(message: any): void;
 }
 
 export default ILogger;

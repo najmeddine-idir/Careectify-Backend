@@ -7,6 +7,7 @@ import "../Common/Extensions/RequestExtensions.js";
 import "./Controllers/UserController.js";
 import ErrorHandlerMiddleware from "./Middlewares/ErrorHandlerMiddleware.js";
 import AuthorizationMiddleware from "./Middlewares/AuthorizationMiddleware.js";
+import { NextFunction, Request, Response, json } from "express";
 
 const port = process.env.PORT;
 
@@ -18,35 +19,36 @@ useDependencyInjenction().then(async (container) => {
   server
     .setConfig((app) => {
       app
+        .use(json())
         .use("/swagger", serve, setup(swaggerDocument))
-        .use((req, res, next) => {
-          req.abortController = new AbortController();
-          req.on("close", () => {
-            req.abortController.abort();
-          });
-          next();
-        })
+        .use(abortControllerMiddleware())
         .use(
           container
             .get<AuthorizationMiddleware>("AuthorizationMiddleware")
-            .handle.bind(
-              container.get<AuthorizationMiddleware>("AuthorizationMiddleware")
-            )
+            .handle.bind(container.get<AuthorizationMiddleware>("AuthorizationMiddleware"))
         );
     })
     .setErrorConfig((app) => {
       app.use(
         container
           .get<ErrorHandlerMiddleware>("ErrorHandlerMiddleware")
-          .handle.bind(
-            container.get<ErrorHandlerMiddleware>("ErrorHandlerMiddleware")
-          )
+          .handle.bind(container.get<ErrorHandlerMiddleware>("ErrorHandlerMiddleware"))
       );
     })
     .build()
     .listen(port, () => {
-      console.log(
-        `⚡️[server]: Server is running at http://localhost:${port}/swagger`
-      );
+      console.log(`⚡️[server]: Server is running at http://localhost:${port}/swagger`);
     });
 });
+
+function abortControllerMiddleware() {
+  return (req: Request, res: Response, next: NextFunction) => {
+    req.abortController = new AbortController();
+
+    req.on("close", () => {
+      req.abortController.abort();
+    });
+
+    next();
+  };
+}
