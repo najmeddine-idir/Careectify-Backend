@@ -37,35 +37,23 @@ class WinstonLogger implements ILogger {
     }
   }
 
-  debug(message: object | string | number): void {
-    if (message instanceof Object) {
-      message = { ...message };
-    }
-
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  debug(message: any): void {
     this._logger.debug(message);
   }
 
-  error(message: object | string | number): void {
-    if (message instanceof Object) {
-      message = { ...message };
-    }
-
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  error(message: any): void {
     this._logger.error(message);
   }
 
-  information(message: object | string | number): void {
-    if (message instanceof Object) {
-      message = { ...message };
-    }
-
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  information(message: any): void {
     this._logger.info(message);
   }
 
-  warning(message: object | string | number): void {
-    if (message instanceof Object) {
-      message = { ...message };
-    }
-
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  warning(message: any): void {
     this._logger.debug(message);
   }
 }

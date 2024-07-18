@@ -3,11 +3,13 @@ import {
   Route,
   BaseHttpController,
   Get,
-  FromRoute,
   Request,
   Tags,
   Response,
   Security,
+  Body,
+  Post,
+  Path,
 } from "../Utilities/webApi.js";
 import express from "express";
 import IUserService from "../../Domain/Services/Abstractions/IUserService.js";
@@ -18,6 +20,9 @@ import {
   ErrorNotFoundResponse,
   ErrorUnexpectedErrorResponse,
 } from "../Dtos/Responses/ErrorResponse.js";
+import UsersFilterRequest from "../Dtos/Requests/UsersFilterRequest.js";
+import PagedResponse from "../Dtos/Responses/Abstractions/PagedResponse.js";
+import SearchRequest from "../Dtos/Requests/Common/SearchRequest.js";
 
 @Security("bearer")
 @Tags("User")
@@ -42,16 +47,33 @@ export class UserController extends BaseHttpController {
   @Response<ErrorUnexpectedErrorResponse>(500)
   @Get("/:id")
   public async GetUser(
-    @FromRoute("id") id: string,
+    @Path("id") id: string,
     @Request() { abortController }: express.Request
   ): Promise<UserResponse> {
-    const user = await this._userService.getUserByIdAsync(
-      id,
-      abortController.signal
-    );
+    const user = await this._userService.getUserByIdAsync(id, abortController.signal);
 
     const userResponse = UserConverter.toUserResponse(user);
 
-    return this.ok(userResponse) as UserResponse;
+    return this.json(userResponse, 200) as UserResponse;
+  }
+
+  /**
+   *
+   * @param usersSearchRequest Users search request
+   * @returns Paged list of users
+   */
+  @Response<PagedResponse<UserResponse>>(200)
+  @Response<ErrorNotAuthorizedResponse>(401)
+  @Response<ErrorUnexpectedErrorResponse>(500)
+  @Post("/search")
+  public async GetUsers(
+    @Body() usersSearchRequest: SearchRequest<UsersFilterRequest>,
+    @Request() { abortController }: express.Request
+  ): Promise<UserResponse[]> {
+    const usersSearch = UserConverter.toSearchUsersFilter(usersSearchRequest);
+    const users = await this._userService.getUsersAsync(usersSearch, abortController.signal);
+    const userResponses = UserConverter.toUserResponses(users);
+
+    return this.json(userResponses, 200) as unknown as UserResponse[];
   }
 }
